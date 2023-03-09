@@ -8,19 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+  @ObservedObject var networkManager = NetworkingManager()
+     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+        NavigationView {
+            List(networkManager.posts) { post in
+                HStack {
+                    Text(String(post.points))
+                    Text(post.title)
+                }
+            }.navigationBarTitle("H4XOR News")
+                .onAppear{
+                    self.networkManager.fetchResults()
+                }
+            }
+         }
+     }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
+
